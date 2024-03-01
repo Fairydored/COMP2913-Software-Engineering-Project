@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.helloworld.Mapper.userMapper">
+    <select id="selectall" resultType="com.example.helloworld.model.User">
+        select * from users;
+    </select>
+    <select id="selectzhangsan" resultType="com.example.helloworld.model.User">
+        select * from users where username = 'abcde987';
+    </select>
+    <insert id="insertUser" parameterType="com.example.helloworld.model.User">
+        INSERT INTO users (username, password) VALUES (#{username}, #{password})
+    </insert>
+
+
+</mapper>
