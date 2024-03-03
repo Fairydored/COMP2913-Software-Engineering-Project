@@ -52,6 +52,7 @@ export default {
 		this.test()
     },
 
+}
 </script>
 
 <style>
