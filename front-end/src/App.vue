@@ -1,28 +1,58 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div>
+		<h1>这是一个主页</h1>
+		<h2>测试结果：{{res}}</h2>
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+	name: 'App',
+	data() {
+        return {
+			res:''
+            
+        }
+    },
+	components: {
+
+	},
+    methods: {
+		
+		test(){
+// url: 'http://43.143.129.235:3009/number',
+			this.$axios({
+				method: "post",
+				
+				url: 'http://127.0.0.1:3009/number',
+
+				headers: { 
+					// "Content-Type":"multipart/form-data"
+					"Content-Type":"application/json"
+				},
+				data:{
+					
+					a: 3,
+					b: 2
+				}
+			})
+			.then((res) => {
+				console.log(res.data);
+				this.res = res.data
+			})
+		},
+		
+		
+		
+        
+    },
+	created() {  // 生命周期created函数
+		this.test()
+    },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
