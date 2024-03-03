@@ -1,4 +1,5 @@
 <template>
+
 	<div>
 		<h1>这是一个主页</h1>
 		<h2>测试结果：{{res}}</h2>
@@ -50,7 +51,7 @@ export default {
 	created() {  // 生命周期created函数
 		this.test()
     },
-}
+
 </script>
 
 <style>
