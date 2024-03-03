@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestPart;
 
 @RestController
 public class HelloController {
@@ -18,5 +19,13 @@ public class HelloController {
         int sum = input.getA() + input.getB();
         return "The sum of a and b is: " + sum;
     }
+
+    /*@PostMapping(value = "/number", consumes = "multipart/form-data")
+    public String receiveFormData(@RequestPart("a") int a, @RequestPart("b") int b) {
+        int sum = a + b;
+        return "The sum of a and b is: " + sum;
+    }*/
+
+
 }
 
