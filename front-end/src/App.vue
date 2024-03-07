@@ -21,7 +21,7 @@ export default {
 	name: 'App',
 	data() {
         return {
-			res:'请您输入用户名和密码（用户名:tingwoshuo 密码:xiexieni）',
+			res:'请您输入用户名和密码（用户名:tingwoshuo 密码:xiexieni)',
 			username:'',
 			password:'',
             
