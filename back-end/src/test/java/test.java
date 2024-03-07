@@ -1,14 +1,14 @@
 
 
 import java.io.InputStream;
+
+import com.example.helloworld.Mapper.UserMapper;
 import com.example.helloworld.model.User;
-import com.example.helloworld.Mapper.userMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 public class test {
@@ -18,12 +18,14 @@ public class test {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
-            userMapper mapper = sqlSession.getMapper(userMapper.class);
+            UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
             // 创建一个新的 User 对象
             User newUser = new User();
-            newUser.setUsername("tingwoshuo");
-            newUser.setPassword("xiexieni");
+            //newUser.setUsername("tingwoshuo");
+            //newUser.setPassword("xiexieni");
+            newUser.setUsername("123");
+            newUser.setPassword("456");
 
             // 插入新用户到数据库
             mapper.insertUser(newUser);

@@ -1,0 +1,33 @@
+spring:
+    profiles:
+        include:
+            prod, dev
+    datasource:
+        username: root
+        url: jdbc:mysql://localhost:3306/sep_cw2
+        password: 123456
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        type: com.alibaba.druid.pool.DruidDataSource
+    jackson:
+        default-property-inclusion: non_null
+
+server:
+    port: 8080
+    servlet:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+
+mybatis:
+    mapper-locations: classpath:Mapper/*.xml
+    configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+        map-underscore-to-camel-case: true
+
+
+
+
+
+
+
