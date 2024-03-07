@@ -16,4 +16,10 @@
         select * from users where username = #{username} and password = #{password}
     </select>
 
+    <!-- Add a new select query for the new method -->
+    <select id="selectAllUsers" resultType="com.example.helloworld.model.User">
+        select id, username, password from users;
+    </select>
+
+
 </mapper>

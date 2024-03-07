@@ -4,6 +4,9 @@ import com.example.helloworld.Mapper.UserMapper;
 import com.example.helloworld.model.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
 @RestController
 public class HelloController {
     @Autowired
@@ -42,6 +45,13 @@ public class HelloController {
             return 0; // 登录失败
         }
     }
+
+
+    @PostMapping("/checkall")
+    public List<User> checkAllUsers() {
+        return userMapper.selectAllUsers();
+    }
+
 
     /*@GetMapping("/login")
     public int loginGet( String username,  String password) {
