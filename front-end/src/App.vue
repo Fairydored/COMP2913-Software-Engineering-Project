@@ -1,7 +1,17 @@
 <template>
+
 	<div>
-		<h1>这是一个主页</h1>
-		<h2>测试结果：{{res}}</h2>
+		<h1>这是一个简单的登录页面</h1>
+		<div>
+			用户
+			<input type="text" v-model="username">
+		</div>
+		<div>
+			密码
+			<input type="text" v-model="password">
+		</div>
+		<button @click="login()">登录</button>
+		<div>{{res}}</div>
 	</div>
 </template>
 
@@ -11,7 +21,9 @@ export default {
 	name: 'App',
 	data() {
         return {
-			res:''
+			res:'请您输入用户名和密码（用户名:tingwoshuo 密码:xiexieni）',
+			username:'',
+			password:'',
             
         }
     },
@@ -19,13 +31,13 @@ export default {
 
 	},
     methods: {
-		
-		test(){
-// url: 'http://43.143.129.235:3009/number',
+		login(){
+			console.log('点击了登录按钮');
+
 			this.$axios({
 				method: "post",
 				
-				url: 'http://127.0.0.1:3009/number',
+				url: 'http://43.143.129.235:3009/login',
 
 				headers: { 
 					// "Content-Type":"multipart/form-data"
@@ -33,23 +45,27 @@ export default {
 				},
 				data:{
 					
-					a: 3,
-					b: 2
+					username: this.username,
+					password: this.password,
 				}
 			})
 			.then((res) => {
-				console.log(res.data);
-				this.res = res.data
+				if (res.data == 0) {
+					this.res = '登录失败'
+				}else{
+					this.res = '登录成功'
+				}
 			})
+
 		},
 		
 		
 		
         
     },
-	created() {  // 生命周期created函数
-		this.test()
+	created() { 
     },
+
 }
 </script>
 
