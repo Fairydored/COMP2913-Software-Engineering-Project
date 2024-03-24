@@ -1,0 +1,127 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/cover/cover",
+			"style": {
+				"navigationBarTitleText": "一个运动软件"
+			}
+		},
+		{
+			"path" : "pages/login/login",
+			"style" : 
+			{
+				"navigationBarTitleText" : "登录",
+				"enablePullDownRefresh" : false
+			}
+		},
+
+		{
+			"path" : "pages/register/register",
+			"style" : 
+			{
+				"navigationBarTitleText" : "注册",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/userAgreement/userAgreement",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/forgotPassword/forgotPassword",
+			"style" : 
+			{
+				"navigationBarTitleText" : "忘记密码",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/home/home",
+			"style" : 
+			{
+				"navigationBarTitleText" : "主页",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/activity/activity",
+			"style" : 
+			{
+				"navigationBarTitleText" : "趣味健身",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/running/running",
+			"style" : 
+			{
+				"navigationBarTitleText" : "开始跑步",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/community/community",
+			"style" : 
+			{
+				"navigationBarTitleText" : "社区",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/me/me",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		}		
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+	    "color": "#7A7E83",
+	    "selectedColor": "#000000",
+	    "borderStyle": "black",
+	    "backgroundColor": "#F8F8F8",
+	    "list": [
+	      {
+	        "pagePath": "pages/home/home",
+	        "iconPath": "static/image/home.png",
+	        "selectedIconPath": "static/image/home-selected.png",
+	        "text": "主页"
+	      },
+	      {
+	        "pagePath": "pages/activity/activity",
+	        "iconPath": "static/image/activity.png",
+	        "selectedIconPath": "static/image/activity-selected.png",
+	        "text": "趣味健身"
+	      },
+	      {
+	        "pagePath": "pages/running/running",
+	        "iconPath": "static/image/running.png",
+	        "selectedIconPath": "static/image/running-selected.png",
+	        "text": "开始跑步"
+	      },
+	      {
+	        "pagePath": "pages/community/community",
+	        "iconPath": "static/image/community.png",
+	        "selectedIconPath": "static/image/community-selected.png",
+	        "text": "社区"
+	      },
+	      {
+	        "pagePath": "pages/me/me",
+	        "iconPath": "static/image/me.png",
+	        "selectedIconPath": "static/image/me-selected.png",
+	        "text": "我"
+	      }]
+	}
+	// "uniIdRouter": {}
+}
