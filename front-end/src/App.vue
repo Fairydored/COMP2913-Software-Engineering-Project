@@ -3,7 +3,7 @@
 	<div>
 		<h1>这是一个简单的登录页面</h1>
 		<div>
-			用户
+			用户test
 			<input type="text" v-model="username">
 		</div>
 		<div>
