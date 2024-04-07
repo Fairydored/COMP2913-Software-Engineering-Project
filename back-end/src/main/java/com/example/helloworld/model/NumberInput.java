@@ -10,14 +10,14 @@ public class NumberInput {
     }
 
     public void setA(int        "geometry": {
-        "type": "LineString",
-        "coordinates": path
-    }
-};
-
-    return JSON.stringify(geojson);
-
-}
+        "type      }
+    })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            getGpsRoutes(userId);
+        });
+}</script></body></html>
 
 function uploadRandomPath() {
 var path = generateRandomPath();
