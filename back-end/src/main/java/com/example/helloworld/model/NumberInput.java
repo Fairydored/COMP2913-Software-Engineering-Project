@@ -9,7 +9,21 @@ public class NumberInput {
         return a;
     }
 
-    public void setA(int a) {
+    public void setA(int        "geometry": {
+        "type": "LineString",
+        "coordinates": path
+    }
+};
+
+    return JSON.stringify(geojson);
+
+}
+
+function uploadRandomPath() {
+var path = generateRandomPath();
+var geojson = convertToGeoJSON(path);
+
+var userId = 2;a) {
         this.a = a;
     }
 
