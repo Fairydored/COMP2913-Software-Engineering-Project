@@ -1,23 +1,13 @@
-p            console.log(route);
-console.log(route.routeData);
-console.log(JSON.parse(route.routeData));
-var routeFeature = new ol.format.GeoJSON().readFeature(JSON.parse(route.routeData));
-var routeGeometry = routeFeature.getGeometry();
-
-var vectorLayer = new ol.layer.Vector({
-    source: new ol.source.Vector({
-        features: [routeFeature]
-    })
-});
-            alert(data);
-            getGpsRoutes(userId);
-        });
-}</script></body></html>
-
-function uploadRandomPath() {
-var path = generateRandomPath();
-var geojson = convertToGeoJSON(path);
-
+<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+</head>
+<body>
+<div id="map" style="height: 400px;"></div>
+<button onclick="uploadRandomPath()">上传并显示随机路径</button>
+<form id="uploadForm">
+    <input type="text" name="routeName" placeholder="路线名称">
+    <input type="file" name="routeFile">
+    <button type="submit">上传</button>
+</form>
 var userId = 2;a) {
         this.a = a;
     }
