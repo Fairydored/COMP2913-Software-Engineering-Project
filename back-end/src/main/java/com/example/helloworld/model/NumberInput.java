@@ -1,19 +1,14 @@
-package com.example.helloworld.model;
+p            console.log(route);
+console.log(route.routeData);
+console.log(JSON.parse(route.routeData));
+var routeFeature = new ol.format.GeoJSON().readFeature(JSON.parse(route.routeData));
+var routeGeometry = routeFeature.getGeometry();
 
-public class NumberInput {
-    private int a;
-    private int b;
-
-    // getter and setter methods
-    public int getA() {
-        return a;
-    }
-
-    public void setA(int        "geometry": {
-        "type      }
+var vectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        features: [routeFeature]
     })
-        .then(response => response.text())
-        .then(data => {
+});
             alert(data);
             getGpsRoutes(userId);
         });
