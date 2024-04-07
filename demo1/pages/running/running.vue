@@ -188,7 +188,7 @@ else{
 	  z-index: 9999; // 确保黑屏覆盖其他内容
 	}
 	.countdown {
-	    color: white;
+	    color: pink;
 	    font-size: 8em; // 根据需要调整字体大小
 	}
 	.information {
