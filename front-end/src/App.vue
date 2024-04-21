@@ -7,7 +7,7 @@
 			<input type="text" v-model="username">
 		</div>
 		<div>
-			密码
+			密码test
 			<input type="text" v-model="password">
 		</div>
 		<button @click="login()">登录</button>
