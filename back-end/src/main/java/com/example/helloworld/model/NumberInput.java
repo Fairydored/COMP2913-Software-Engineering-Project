@@ -9,9 +9,3 @@ headers: {
 }
 })
 .then(response => response.text())
-.then(data => {
-    alert(data);
-    getGpsRoutes(userId);
-});
-    }
-}
