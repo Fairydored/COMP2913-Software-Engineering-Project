@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<title>运动</title>
+		<script src="https://webapi.amap.com/loader.js"></script>
+		<!-- vus -->
+		<script src="https://cdn.bootcss.com/vue/2.6.11/vue.js"></script>
+	</head>
+	<body>
+		<div v-if="countdown > 0" class="black-screen">
+			<div class="countdown">{{ countdown }}</div>
+		</div>
+		<div v-else id="app">
+			<div id="container"></div>
+			<div class="information" :style="{ height: dynamicHeight }" @touchstart="startDrag" @touchmove="onDrag"
+				@touchend="stopDrag" @mousedown="startDrag" @mousemove="onDrag" @mouseup="stopDrag" ref="information">
+				<div class="button-item" :style="{width:'100vw', backgroundColor: 'rgb(70,64,76)'}">
+					<u-icon name='minus' size=100px></u-icon>
+				</div>
+				<div class="info-item" v-for="(item, index) in infoItems" :key="index"
+					:style="{ width: infoItemWidth ,backgroundColor: item.bgColor}"
+					@click="item.button ? pause() : null">
+					<div class="label">{{ item.label }}</div>
+					<div class="value">{{ item.value }}</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="//js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.0.1.52.js"></script>
+	<script>
+		function showPath() {
+			showPathNew();
+		};
+		new Vue({
+			el: '#app',
+			data() {
+				return {
+					pageIndex: 1,
+					map: null,
+					polyline: null,
+					passedPolyline: null,
+					marker: null,
+					pathVisible: false,
+					countdown: 3,
+					isDragging: false,
+					isPause: false,
+					isPhone: false,
+					isExtend: false,
+					startY: 0,
+					dynamicHeight: '17vh',
+					infoItemWidth: '33%',
+
+					infoItems: [{
+							label: '距离',
+							value: '0.00',
+							bgColor: 'transparent'
+						},
+						{
+							label: '时间',
+							value: '00:00',
+							bgColor: 'transparent'
+						},
+						{
+							label: '实时配速',
+							value: "0'00\"",
+							bgColor: 'transparent'
+						}
+					]
+				}
+			},
+			mounted() {
+				this.initr()
+
+				const countdownInterval = setInterval(() => {
+					if (this.countdown > 0) {
+						this.countdown--;
+					} else {
+						this.initAMap();
+					}
+				}, 1000);
+
+			},
+			created() {
+				window.showPathNew = this.showPath;
+			},
+			methods: {
+				initr() {
+					AMapLoader.load({
+						"key": "07a8cceed8195d4bdfa88bd551ea52b3", // 申请好的Web端开发者Key，首次调用 load 时必填
+						"version": "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+						"plugins": ["AMap.Scale", "AMap.ToolBar",
+							"AMap.MoveAnimation"
+						], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+						"AMapUI": { // 是否加载 AMapUI，缺省不加载
+							"version": '1.1', // AMapUI 版本
+							"plugins": ['overlay/SimpleMarker'], // 需要加载的 AMapUI ui插件
+						},
+						"Loca": { // 是否加载 Loca， 缺省不加载
+							"version": '2.0' // Loca 版本
+						},
+					}).then((AMap) => {
+						this.map = new AMap.Map('container', {
+							center: [104.06180355807209, 30.64236326473902],
+							resizeEnable: true,
+							zoom: 13 //地图显示的缩放级别
+						});
+						// 缩放控件
+						this.map.addControl(new AMap.ToolBar());
+					}).catch((e) => {
+						console.error(e); //加载错误提示
+					});
+				},
+				pause() {
+					if (this.isPause == false) {
+						this.infoItems = [{
+								label: '距离',
+								value: '0.00'
+							},
+							{
+								label: '时间',
+								value: '00:00'
+							},
+							{
+								label: '实时配速',
+								value: "0'00\""
+							},
+							{
+								label: '总消耗',
+								value: "0"
+							},
+							{
+								label: '',
+								value: ">",
+								button: true,
+								bgColor: 'green'
+							},
+						];
+						this.isPause = true;
+					} else {
+						this.infoItems = [{
+								label: '距离',
+								value: '0.00'
+							},
+							{
+								label: '时间',
+								value: '00:00'
+							},
+							{
+								label: '实时配速',
+								value: "0'00\""
+							},
+							{
+								label: '实时心率',
+								value: "0 ❤"
+							},
+							{
+								label: '',
+								value: "||",
+								button: true
+							},
+						];
+						this.isPause = false;
+					}
+
+				},
+				startDrag(event) {
+					this.isDragging = true;
+					const subNVue = uni.getSubNVueById('popup');
+					let targetElement = this.$refs.information;
+					// 区分触摸事件和鼠标事件
+					if (event.type.startsWith('touch')) {
+						targetElement.addEventListener('touchmove', this.onDrag);
+						targetElement.addEventListener('touchend', this.stopDrag);
+						this.isPhone = true;
+					} else {
+						document.addEventListener('mousemove', this.onDrag);
+						document.addEventListener('mouseup', this.stopDrag);
+						this.isPhone = false;
+					}
+					this.startY = event.type.startsWith('touch') ? event.touches[0].clientY : event.clientY;
+				},
+				onDrag(event) {
+					if (!this.isDragging) return;
+					const clientY = event.type.startsWith('touch') ? event.touches[0].clientY : event.clientY;
+
+
+					// 根据鼠标指针的位置设置盒子的高度
+					if (Math.abs(this.startY - clientY) > 50) {
+						if (this.isExtend == false) {
+
+							this.dynamicHeight = '90vh';
+							this.infoItemWidth = '50%';
+							if (this.isPause == false) {
+								this.infoItems = [{
+										label: '距离',
+										value: '0.00'
+									},
+									{
+										label: '时间',
+										value: '00:00'
+									},
+									{
+										label: '实时配速',
+										value: "0'00\""
+									},
+									{
+										label: '实时心率',
+										value: "0 ❤"
+									},
+									{
+										label: '',
+										value: "||",
+										button: true
+									}
+								]
+							} else {
+								this.infoItems = [{
+										label: '距离',
+										value: '0.00'
+									},
+									{
+										label: '时间',
+										value: '00:00'
+									},
+									{
+										label: '实时配速',
+										value: "0'00\""
+									},
+									{
+										label: '总消耗',
+										value: "0"
+									},
+									{
+										label: '',
+										value: ">",
+										button: true,
+										bgColor: 'green'
+									}
+								]
+							}
+						} else {
+
+							this.dynamicHeight = '17vh';
+							this.infoItemWidth = '33%';
+							this.infoItems = [{
+									label: '距离',
+									value: '0.00'
+								},
+								{
+									label: '时间',
+									value: '00:00'
+								},
+								{
+									label: '实时配速',
+									value: "0'00\""
+								}
+							]
+						}
+
+
+					}
+				},
+				stopDrag() {
+					if (this.isExtend == false) {
+						this.isExtend = true;
+					} else {
+						this.isExtend = false;
+					}
+					this.isDragging = false;
+					let targetElement = this.$refs.information;
+					if (this.isPhone == true) {
+						targetElement.removeEventListener('touchmove', this.onDrag);
+						targetElement.removeEventListener('touchend', this.stopDrag);
+					} else {
+						document.removeEventListener('mousemove', this.onDrag);
+						document.removeEventListener('mouseup', this.stopDrag);
+					}
+
+				}
+			},
+		})
+	</script>
+
+	<style scoped>
+		* {
+			margin: 0;
+		}
+
+		body,
+		html,
+		#container {
+			width: 100vw;
+			height: 80vh
+		}
+
+		#panel {
+			position: fixed;
+			background-color: white;
+			max-height: 90%;
+			overflow-y: auto;
+			top: 10px;
+			right: 10px;
+			width: 280px;
+		}
+
+		#panel .amap-call {
+			background-color: #009cf9;
+			border-top-left-radius: 4px;
+			border-top-right-radius: 4px;
+		}
+
+		#panel .amap-lib-driving {
+			border-bottom-left-radius: 4px;
+			border-bottom-right-radius: 4px;
+			overflow: hidden;
+		}
+
+		.amap-logo {
+			display: none;
+			opacity: 0 !important;
+		}
+
+		.amap-copyright {
+			opacity: 0;
+		}
+
+		.black-screen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background-color: black;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 9999; // 确保黑屏覆盖其他内容
+		}
+
+		.countdown {
+			color: white;
+			font-size: 8em; // 根据需要调整字体大小
+		}
+
+		.information {
+			position: fixed;
+			width: 100vw;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			border-top-left-radius: 2vh; // 根据需要调整圆角大小
+			border-top-right-radius: 2vh; // 根据需要调整圆角大小
+			background-color: rgb(70, 64, 76);
+			z-index: 5;
+			display: flex;
+			flex-wrap: wrap;
+			row-gap: 10px;
+			justify-content: flex-start;
+			transition: 0.5s;
+
+			.info-item {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				color: #fff;
+				height: 10vh;
+				margin: 1vh 0;
+				margin-bottom: 10px;
+
+				&:nth-child(6) {
+					background-color: red;
+					border-radius: 50%;
+					align-self: center;
+					margin: auto;
+					width: 70px !important;
+					height: 70px;
+				}
+
+				.label {
+					font-size: 20px;
+				}
+
+				.value {
+					font-size: 25px;
+					font-weight: bold;
+				}
+			}
+
+			.button-item {
+				border-top-left-radius: 2vh; // 根据需要调整圆角大小
+				border-top-right-radius: 2vh; // 根据需要调整圆角大小
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				color: #fff;
+				height: 2vh;
+			}
+	</style>
+</html>

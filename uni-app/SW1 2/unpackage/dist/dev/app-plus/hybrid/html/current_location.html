@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<title>Exercise</title>
+		<script src="https://webapi.amap.com/loader.js"></script>
+		<!-- vus -->
+		<script src="https://cdn.bootcss.com/vue/2.6.11/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div id="container"></div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="//js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.0.1.52.js"></script>
+	<script>
+		function showPath() {
+			showPathNew();
+		};
+		new Vue({
+			el: '#app',
+			data() {
+				return {
+					pageIndex: 1,
+					map: null,
+					polyline: null,
+					passedPolyline: null,
+					marker: null,
+					pathVisible: false,
+					lineArr: [
+						[104.06180355807209, 30.64236326473902],
+						[104.10389541075799, 30.639489379227957],
+						[104.0582860219486, 30.658582821336747],
+						[104.10643719804897, 30.67475157089868],
+						[103.94109344430673, 30.579172406289633],
+						[103.98773185239645, 30.66070204196852],
+						[103.9786574177346, 30.59590693461704],
+						[104.10603081738167, 30.6637809317031],
+						[104.02537614683423, 30.630417359291442],
+						[104.0826365970918, 30.591505161703285]
+					],
+				}
+			},
+			mounted() {
+				this.initr()
+				this
+			},
+			created() {
+				window.showPathNew = this.showPath;
+			},
+			methods: {
+				initr() {
+					AMapLoader.load({
+						"key": "07a8cceed8195d4bdfa88bd551ea52b3", // 申请好的Web端开发者Key，首次调用 load 时必填
+						"version": "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+						"plugins": ["AMap.Scale", "AMap.ToolBar", "AMap.MoveAnimation",
+							"Amap.Geolocation"
+						], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+						"AMapUI": { // 是否加载 AMapUI，缺省不加载
+							"version": '1.1', // AMapUI 版本
+							"plugins": ['overlay/SimpleMarker'], // 需要加载的 AMapUI ui插件
+						},
+						"Loca": { // 是否加载 Loca， 缺省不加载
+							"version": '2.0' // Loca 版本
+						},
+					}).then((AMap) => {
+						this.map = new AMap.Map('container', {
+							// center: [104.06180355807209, 30.64236326473902],
+							resizeEnable: true,
+							// zoom: 13 //地图显示的缩放级别
+						});
+						// 缩放控件
+						this.map.addControl(new AMap.ToolBar());
+						// 显示当前位置
+						var options = {
+							'enableHighAccuracy': true, //是否使用高精度定位，默认:true
+							'zoomToAccuracy': true,   
+							'timeout': 20000,
+							'showButton': true, //是否显示定位按钮
+							'position': 'LB', //定位按钮的位置
+							/* LT LB RT RB */
+							'offset': [10, 20], //定位按钮距离对应角落的距离
+							'showMarker': true, //是否显示定位点
+							'showCircle': true, //是否显示定位精度圈
+							'circleOptions': { //定位精度圈的样式
+								'strokeColor': '#0093FF',
+								'noSelect': true,
+								'strokeOpacity': 0.5,
+								'strokeWeight': 1,
+								'fillColor': '#02B0FF',
+								'fillOpacity': 0.25
+							}
+						}
+						AMap.plugin('AMap.Geolocation', () => {
+							const geolocation = new AMap.Geolocation(options);
+							this.map.addControl(geolocation);
+							geolocation.getCurrentPosition();
+						});
+					}).catch((e) => {
+						console.error(e); //加载错误提示
+					});
+				},
+				showPath() {
+					const start_icon = new AMap.Icon({
+						size: new AMap.Size(40, 40), //图标尺寸
+						image: "../../static/start_point.png", //Icon 的图像
+						imageSize: new AMap.Size(50, 50), //根据所设置的大小拉伸或压缩图片
+					});
+					const end_icon = new AMap.Icon({
+						size: new AMap.Size(40, 40),
+						image: "../../static/end_point.png",
+						imageSize: new AMap.Size(50, 50),
+					});
+
+					var start_marker = new AMap.Marker({
+						map: this.map,
+						icon: start_icon,
+						position: this.lineArr[0],
+						offset: new AMap.Pixel(-23, -40)
+					});
+
+					var end_marker = new AMap.Marker({
+						map: this.map,
+						icon: end_icon,
+						position: this.lineArr[this.lineArr.length - 1],
+						offset: new AMap.Pixel(-26, -40)
+					});
+
+					this.polyline = new AMap.Polyline({
+						map: this.map,
+						path: this.lineArr,
+						showDir: true,
+						strokeColor: "#28F", //线颜色
+						strokeWeight: 6, //线宽
+					});
+				},
+			},
+		})
+	</script>
+
+	<style scoped>
+		* {
+			margin: 0;
+		}
+
+		body,
+		html,
+		#container {
+			width: 100vw;
+			height: 100vh
+		}
+
+		#panel {
+			position: fixed;
+			background-color: white;
+			max-height: 90%;
+			overflow-y: auto;
+			top: 10px;
+			right: 10px;
+			width: 280px;
+		}
+
+		#panel .amap-call {
+			background-color: #009cf9;
+			border-top-left-radius: 4px;
+			border-top-right-radius: 4px;
+		}
+
+		#panel .amap-lib-driving {
+			border-bottom-left-radius: 4px;
+			border-bottom-right-radius: 4px;
+			overflow: hidden;
+		}
+
+		.amap-logo {
+			display: none;
+			opacity: 0 !important;
+		}
+
+		.amap-copyright {
+			opacity: 0;
+		}
+	</style>
+</html>

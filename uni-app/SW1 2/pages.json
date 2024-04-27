@@ -1,0 +1,146 @@
+{
+	"easycom": {
+			"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
+		},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom" ,// 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 
+				// "navigationBarTitleText": "Mile Hunter"
+			}
+		},
+		{
+			"path" : "pages/login/login",
+			"style" : 
+			{
+				"navigationStyle": "custom" ,// 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 
+				// "navigationBarTitleText" : "用户登录",
+				// "enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/login/signin",
+			"style" : 
+			{
+				"navigationStyle": "custom" ,// 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 
+				// "navigationBarTitleText" : "用户登录",
+				// "enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/forget_password/forget_password",
+			"style" : 
+			{
+				"navigationStyle": "custom" ,// 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 
+				// "navigationBarTitleText" : "找回密码",
+				// "enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/sports/sports",
+			"style" : 
+			{
+				"navigationStyle": "custom" ,// 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 
+				// "navigationBarTitleText" : "",
+				// "enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/sports2/sports2",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/sports2/running",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/me/me",
+			"style" : 
+			{
+				"navigationStyle": "custom" ,// 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 
+				// "navigationBarTitleText" : "",
+				// "enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/me/renew",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/me/member-center",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/friends/friends",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+				// "navigationStyle": "custom" ,// 隐藏系统导航栏
+				// "navigationBarTextStyle": "white" // 
+			}
+		},
+		{
+			"path" : "pages/me/subscribe",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/friends/addFriend",
+			"style" : 
+			{
+				"navigationBarTitleText" : "Add friends",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/friends/UserInfoPage",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/upload/upload",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {}
+}

@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["pages-forget_password-forget_password"],{1074:function(o,s,d){"use strict";d.r(s);var e=d("f0c5"),n=Object(e["a"])({},void 0,void 0,!1,null,null,null,!1,void 0,void 0);s["default"]=n.exports}}]);
